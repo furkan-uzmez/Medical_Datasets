@@ -12,7 +12,7 @@
     - **Demographics**: Visualized Patient Age and Sex distributions.
     - **Validation Status**: Discovered 100% of the dataset is `study_is_validation=False` (not manually validated).
     - **Benchmark Status**: Discovered 100% of the dataset is `study_is_benchmark=True` (it's the official benchmark set).
-    - **Label Analysis**: Visualized Normal vs Pathology distribution.
+    - **Label Analysis**: Visualized Normal vs Pathology distribution.\n    - **Integrity Check**: Added code to `analysis.ipynb` to verify all image files can be opened without corruption.
 
 ## Next Steps
 - Create `README.md` to summarize the project and analysis results.
