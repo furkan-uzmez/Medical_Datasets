@@ -79,3 +79,77 @@ class PadChestDataset(Dataset):
             image = self.transform(image)
 
         return image, label
+
+
+class PadChestBinaryDataset(Dataset):
+    """
+    Binary classification dataset for PadChest-GR.
+    Uses the master_table_binary.csv which has unique images with binary labels.
+    Returns: Normal (0) vs Abnormal (1)
+    """
+    
+    def __init__(self, csv_file, img_dir, transform=None, split='train', label_col='label_group'):
+        """
+        Args:
+            csv_file (string): Path to the binary csv file (master_table_binary.csv).
+            img_dir (string): Directory with all the images.
+            transform (callable, optional): Transform to apply to images.
+            split (string): 'train', 'validation', or 'test'.
+            label_col (string): Column to use as label (should be 'label_group' or 'label').
+        """
+        self.img_dir = img_dir
+        self.transform = transform
+        
+        try:
+            self.data = pd.read_csv(csv_file)
+        except Exception:
+            self.data = pd.read_csv(csv_file + ".zip")
+
+        if split and 'split' in self.data.columns:
+            self.data = self.data[self.data['split'] == split].reset_index(drop=True)
+        
+        self.label_col = label_col
+        self.data[self.label_col] = self.data[self.label_col].fillna("Unknown")
+        
+        # Binary classes
+        self.classes = ['Normal', 'Abnormal']
+        self.class_to_idx = {'Normal': 0, 'Abnormal': 1}
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+
+        img_name = self.data.iloc[idx]['ImageID']
+        
+        img_path = None
+        if img_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+            temp_path = os.path.join(self.img_dir, img_name)
+            if os.path.exists(temp_path):
+                img_path = temp_path
+        else:
+            for ext in ['.png', '.jpg', '.jpeg', '']:
+                temp_path = os.path.join(self.img_dir, img_name + ext)
+                if os.path.exists(temp_path):
+                    img_path = temp_path
+                    break
+        
+        if img_path is None:
+            image = Image.new('RGB', (224, 224), color='black')
+        else:
+            try:
+                image = Image.open(img_path).convert('RGB')
+            except Exception as e:
+                print(f"Error loading image {img_path}: {e}")
+                image = Image.new('RGB', (224, 224), color='black')
+
+        label_name = self.data.iloc[idx][self.label_col]
+        # Binary: 0=Normal, 1=Abnormal
+        label = 0 if label_name == 'Normal' else 1
+
+        if self.transform:
+            image = self.transform(image)
+
+        return image, torch.tensor(label, dtype=torch.float32)

@@ -1,0 +1,44 @@
+============================================================
+Training Log - PadChest-GR Binary Classification
+============================================================
+
+Epoch 1/25
+  Train Loss: 0.2324, Train Acc: 58.09%
+  Val Loss:   0.2209, Val Acc:   68.00%
+  Epoch Time: 390.60s
+----------------------------------------
+Epoch 2/25
+  Train Loss: 0.2269, Train Acc: 62.85%
+  Val Loss:   0.2282, Val Acc:   39.11%
+  Epoch Time: 384.85s
+----------------------------------------
+Epoch 3/25
+  Train Loss: 0.2289, Train Acc: 63.79%
+  Val Loss:   0.2256, Val Acc:   25.92%
+  Epoch Time: 388.09s
+----------------------------------------
+Epoch 4/25
+  Train Loss: 0.2316, Train Acc: 54.93%
+  Val Loss:   0.2305, Val Acc:   79.93%
+  Epoch Time: 391.32s
+----------------------------------------
+Epoch 1/25
+  Train Loss: 0.4609, Train Acc: 56.58%
+  Val Loss:   0.4469, Val Acc:   34.51%
+  Epoch Time: 201.18s
+----------------------------------------
+Epoch 2/25
+  Train Loss: 0.4407, Train Acc: 59.00%
+  Val Loss:   0.4362, Val Acc:   65.05%
+  Epoch Time: 202.98s
+----------------------------------------
+Epoch 3/25
+  Train Loss: 0.4372, Train Acc: 60.75%
+  Val Loss:   0.4340, Val Acc:   63.30%
+  Epoch Time: 202.17s
+----------------------------------------
+Epoch 4/25
+  Train Loss: 0.4378, Train Acc: 59.12%
+  Val Loss:   0.4653, Val Acc:   68.13%
+  Epoch Time: 205.31s
+----------------------------------------
