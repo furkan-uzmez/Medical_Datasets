@@ -1,19 +1,22 @@
 # Progress
 
 ## Status
-- **Project Status**: Initialization
-- **Memory Bank**: Created
+-   **Project Status**: Active Construction & Verification
+-   **Memory Bank**: Updated & Synchronized
 
 ## What Works
-- Memory Bank structure established.
-- Dataset files located.
-- `analysis.ipynb` created for initial exploration.
+-   [x] **Project Structure**: Defined root README and workspace layout.
+-   [x] **Data Analysis**: `analysis.ipynb` and `analysis2.ipynb` provide deep insights.
+-   [x] **Data Processing**: `convert_to_binary_csv.py` successfully creates the binary dataset.
+-   [x] **Training Pipeline**: `train.py` is functional with logging and checkpointing.
+-   [x] **Evaluation Pipeline**: `evaluate_torch_script.py` calculates comprehensive metrics.
+-   [x] **Documentation**: Memory Bank updated; Project READMEs created.
 
 ## What's Left to Build
-- [x] Define project dependencies in `requirements.txt`
-- [ ] Create data loading scripts (Partially covered by notebook)
-- [ ] Implement core analysis/modeling logic
-- [ ] Verify data integrity
+-   [ ] **Optimization**: Hyperparameter tuning for the ResNet model.
+-   [ ] **Advanced Modeling**: Implement multi-label classification (beyond binary).
+-   [ ] **Grounding**: Implement logic to utilize the bounding box data in `grounded_reports.json`.
+-   [ ] **COVID-CXNet**: Deep dive into the second dataset.
 
 ## Known Issues
-- None currently.
+-   None currently blocking.

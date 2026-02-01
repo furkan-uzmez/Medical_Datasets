@@ -1,22 +1,26 @@
 # Product Context
 
 ## Why this project exists
-Medical imaging reports often describe findings in natural language. "Grounding" these reports means mapping specific phrases in the report to specific regions in the image. This project focuses on the **PadChest-GR (Grounded Reports)** dataset, specifically its **Benchmark** subset.
+Medical imaging analysis requires rigorous benchmarking and robust handling of real-world data complexities. This project specifically targets the **PadChest-GR Benchmark** dataset to establish baselines for image classification and report grounding. It addresses the need for:
+1.  **Standardized Benchmarking**: Using the official test split (`study_is_benchmark=True`) for comparable results.
+2.  **Automated Diagnosis**: Developing models to distinguish between Normal and Abnormal chest X-rays.
 
 ## Problems it solves
-- **Standardized Evaluation**: Uses the official "Benchmark" subset of PadChest (`study_is_benchmark=True`), allowing for fair comparison with other academic works.
-- **Weakly Supervised Learning**: The dataset consists of automatically labeled data (`study_is_validation=False`), presenting a challenge for training robust models on noisy labels.
-- **Multi-Label Classification**: Addresses the complexity of chest X-rays where a single image often contains multiple pathological findings.
+-   **Multi-Label to Binary Simplification**: Converts complex multi-label finding data into a clean Binary (Normal/Abnormal) target for initial modeling.
+-   **Class Imbalance**: Addresses the imbalance between Normal and Pathology cases using weighted loss functions during training.
+-   **Noisy Labels**: Handles data where validation status is low (`study_is_validation=False`) by using only the "Benchmark" subset which is considered the ground truth for this specific task scope.
+-   **Data Ingestion**: Provides tools (`dataset.py`, `torch_dataset.py`) to efficiently load long-format CSV data.
 
 ## Dataset Characteristics
-- **Size**: 4,555 unique images (filtered from the larger PadChest dataset).
-- **Format**: Long-format CSV (multiple rows per image, one per label).
-- **Quality**: 
-    - **Labels**: Generated via NLP (not manually validated).
-    - **Benchmark**: Yes, this is the designated test set for comparisons.
-- **Content**: Contains both "Normal" cases and various pathologies, along with bounding box annotations.
+### PadChest-GR
+-   **Size**: ~4,555 unique images in the Benchmark set.
+-   **Format**: Long-format CSV.
+-   **Labels**:
+    -   **Multi-Label**: Original labels include specific findings (e.g., "Infiltration", "Effusion").
+    -   **Binary (Derived)**: "Normal" vs. "Abnormal" (any pathology).
+-   **Splits**: Train / Validation / Test (defined in the CSV).
 
 ## User Experience Goals
-- Efficient data loading that aggregates multiple rows into single image-level samples.
-- Clear visualization of data distributions (completed in `analysis.ipynb`).
-- Reproducible research using the benchmark split.
+-   **Reproducibility**: One-command training and evaluation.
+-   **Visibility**: Clear logging of training metrics (Loss, Accuracy) and Evaluation results (AUC, F1).
+-   **Ease of Access**: Simple conversion scripts to prepare data for different tasks (e.g., `convert_to_binary_csv.py`).

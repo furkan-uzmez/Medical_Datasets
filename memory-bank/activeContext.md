@@ -1,23 +1,29 @@
 # Active Context
 
 ## Current Work Focus
-- **Dataset Analysis**: deeply analyzing the PadChest-GR dataset attributes and data quality.
-- **Documentation**: Updating the project documentation to reflect findings.
+-   **Binary Classification Pipeline**: Finalizing and documenting the pipeline for training ResNet18 on the PadChest-GR binary task.
+-   **Documentation Improvements**: Establishing a project-wide `README` and updating the Memory Bank to reflect the current codebase state.
+-   **Codebase structure**: Ensuring `PadChest-GR` directory is self-contained with its own requirements and scripts.
 
 ## Recent Changes
-- **Detailed EDA**: Performed extensive Exploratory Data Analysis in `analysis.ipynb`:
-    - **Null Value Analysis**: Identified high missing values in `progression_status` (92%) and `prior_imageID` (64%).
-    - **Duplicate Checking**: Confirmed dataset is in long-format (multiple rows per image).
-    - **Image Verification**: Verified presence of images, including nested directory structure for prior studies.
-    - **Demographics**: Visualized Patient Age and Sex distributions.
-    - **Validation Status**: Discovered 100% of the dataset is `study_is_validation=False` (not manually validated).
-    - **Benchmark Status**: Discovered 100% of the dataset is `study_is_benchmark=True` (it's the official benchmark set).
-    - **Label Analysis**: Visualized Normal vs Pathology distribution.\n    - **Integrity Check**: Added code to `analysis.ipynb` to verify all image files can be opened without corruption.
+-   **General**:
+    -   Created project-root `README.md` for workspace navigation.
+    -   Updated `PadChest-GR/README.md` with detailed usage instructions.
+-   **PadChest-GR Implementation**:
+    -   **`convert_to_binary_csv.py`**: Implemented script to flatten multi-label data into binary targets.
+    -   **`train.py`**: Created robust training script with checkpointing, logging, and weighted BCE loss.
+    -   **`evaluate_torch_script.py`**: Implemented standalone evaluation script calculating AUC, F1, and Classification Reports.
+    -   **`utils/torch_dataset.py`**: Refined dataset class to handle image loading and transformations.
+-   **Analysis**:
+    -   `analysis.ipynb`: Completed initial EDA.
+    -   `analysis2.ipynb`: Added patient-level statistics.
 
 ## Next Steps
-- Create `README.md` to summarize the project and analysis results.
-- (Future) Begin data filtering or preprocessing for model training.
+-   **Run Benchmarks**: Execute `evaluate_torch_script.py` on the full test set and record results in `PadChest-GR/README.md` or a dedicated results file.
+-   **Refine Models**: Experiment with different architectures (e.g., DenseNet121) or hyperparameters if baseline performance is insufficient.
+-   **COVID-CXNet**: revisit analysis if priorities shift.
 
 ## Active Decisions
-- **Dataset Nature**: Recognized that the dataset is the "Benchmark" subset of PadChest, meaning it's a fixed standard test set, even if labels are not manually validated.
-- **Data Loading**: Future data loaders must handle the long-format CSV (aggregating labels per ImageID).
+-   **Architecture**: Chose ResNet18 as the initial baseline for speed and efficiency.
+-   **Metric Selection**: Prioritizing AUC and Weighted F1 due to class imbalance in medical datasets.
+-   **File Structure**: Keeping datasets separate (`PadChest-GR`, `COVID-CXNet`) to maintain modularity.
